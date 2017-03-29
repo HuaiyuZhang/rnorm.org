@@ -1,4 +1,4 @@
-baseurl = "https://rnorm.org"
+baseurl = "/"
 title = "rnorm"
 theme = "hugo-universal-theme"
 languageCode = "en-us"
