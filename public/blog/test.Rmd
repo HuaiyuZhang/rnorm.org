@@ -1,0 +1,18 @@
+---
+title: Test
+author: Huaiyu
+date: '2017-03-28'
+slug: test
+categories:
+  - R
+tags:
+  - R Markdown
+---
+
+Hello world!
+
+```{r}
+x <- rnorm(100)
+hist(x)
+```
+
