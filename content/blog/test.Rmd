@@ -19,7 +19,7 @@ hist(x)
 Add another graph
 
 ```{r}
-x <- rpois(100)
+x <- rpois(100, lambda = 1)
 plot(x)
 ```
 
