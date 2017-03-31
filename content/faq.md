@@ -1,6 +1,6 @@
-+++
-title = "FAQ"
-+++
+---
+title: "FAQ"
+---
 
 
 ## Can I post my blog on rnorm.org?
