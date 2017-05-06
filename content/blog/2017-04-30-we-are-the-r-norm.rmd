@@ -1,0 +1,19 @@
+
+---
+title: We are the R norm
+author: 'Xintong'
+date: '2017-04-30'
+slug: we-are-the-r-norm
+categories: []
+tags: []
+banner: "img/banners/banner-1.jpg"
+---
+
+Hello the world !
+
+```{r}
+x=c(1,2,3)
+y=c(2,3,4)
+plot(y~x)
+```
+
