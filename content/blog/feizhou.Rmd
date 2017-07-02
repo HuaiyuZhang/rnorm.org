@@ -1,8 +1,11 @@
 ---
-title: "Combinatorial Optimization Using Hungarian Algorithm"
-author: "Fei Zhou, Dunfu Yang"
-date: "June 6, 2017"
-output: html_document
+title: Combinatorial Optimization Using Hungarian Algorithm
+author: 'Fei Zhou, Dunfu Yang'
+date: '2017-06-06'
+slug: hungarian-algorithm
+categories: []
+tags: []
+banner: "img/banners/banner-2.jpg"
 ---
 
 ```{r setup, include=FALSE}
@@ -13,8 +16,7 @@ Hungarian linear assignment algorithm is a combinatorial optimization algorithm 
 
 In a simple example where we assign 5 tasks to 5 persons.  The time cost for each person to finish each task is known.  The problem is to find the lowest-cost way to assign the tasks. The problem can be represented in a matrix of the costs of time of the people doing the jobs.  For example:
 
-<img src="/Users/xintongli/rnorm/static/img/1.png" width="120px" height="24px" />
-
+![](~/rnorm.org/content/blog/feiZhouImg/1.png)
 
 And we need to assign each person with one task and each task must be accomplished by only one person.  We can let:
 

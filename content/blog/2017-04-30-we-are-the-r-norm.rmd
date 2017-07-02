@@ -12,8 +12,7 @@ banner: "img/banners/banner-1.jpg"
 Hello the world !
 
 ```{r}
-x=c(1,2,3)
-y=c(2,3,4)
-plot(y~x)
+x = rnorm(1000)
+hist(x)
 ```
 
