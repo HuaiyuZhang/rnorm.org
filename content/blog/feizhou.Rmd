@@ -1,0 +1,104 @@
+---
+title: "Combinatorial Optimization Using Hungarian Algorithm"
+author: "Fei Zhou, Dunfu Yang"
+date: "June 6, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Hungarian linear assignment algorithm is a combinatorial optimization algorithm that solves the assignment problems so that an optimal assignment can be found.  Harold Kuhn developed and published the method in 1955.  The algorithm was largely based on the earlier works of two Hungarian mathematicians: Dénes Kőnig and Jenő Egerváry, therefore, the algorithm was named “Hungarian method”.
+
+In a simple example where we assign 5 tasks to 5 persons.  The time cost for each person to finish each task is known.  The problem is to find the lowest-cost way to assign the tasks. The problem can be represented in a matrix of the costs of time of the people doing the jobs.  For example:
+
+<img src="/Users/xintongli/rnorm/static/img/1.png" width="120px" height="24px" />
+
+
+And we need to assign each person with one task and each task must be accomplished by only one person.  We can let:
+
+ 
+<img src="/Users/xintongli/rnorm/static/img/2.png" width="350px" height="70px" />
+
+The problem becomes
+
+<img src="/Users/xintongli/rnorm/static/img/3.png" width="130px" height="26px" />
+
+with
+
+<img src="/Users/xintongli/rnorm/static/img/4.png" width="180px" height="36px" />
+
+In this case the model is:
+
+<img src="/Users/xintongli/rnorm/static/img/5.png" width="800px" height="160px" />
+
+with constraints:
+
+<img src="/Users/xintongli/rnorm/static/img/6.png" width="250px" height="50px" />
+
+Basically, we need to do transformations on the matrix so that in the end there is only one zero in each row and each column, with all elements nonnegative.  Then we can match it to the original matrix so that we can get the lowest-cost way to assign tasks.
+
+Step 1
+Reduce the rows by subtracting the minimum value of each row from that row and we can get matrix C1:
+
+<img src="/Users/xintongli/rnorm/static/img/7.png" width="160px" height="32px" />
+
+Step 2
+If there are columns without a zero, reduce the columns by subtracting the minimum value of each column from that column.  We get a matrix same as C1:
+
+<img src="/Users/xintongli/rnorm/static/img/7.png" width="160px" height="32px" />
+
+Step 3
+Cover the zero elements with the minimum number of lines it is possible to cover them with.  We let the number of lines denoted by m and  the number of rows denoted by n. 
+
+<img src="/Users/xintongli/rnorm/static/img/8.png" width="250px" height="50px" />
+
+Step 4
+If m < n, we can divide the elements of C2 into 3 categories:
+1) elements that are not covered by lines
+2) elements that are covered by only one line
+3) elements that are covered by two lines
+For elements in the first category, we can find the minimum value e and subtract e from all elements in the first category; elements in the second category stay the same and add e to the elements in the third category.  Then we can get another matrix C3:
+
+<img src="/Users/xintongli/rnorm/static/img/9.png" width="160px" height="32px" />
+
+Step 5
+If we cover the zero elements of matrix C3 with the minimum number of lines.  The lines will be on the first, fourth and fifth column, third and fourth row.  This time we have m = n.
+
+Step 6
+Start with a row or a column with only one zero and choose a set of zeros so that each row or column has only one zero selected.
+
+<img src="/Users/xintongli/rnorm/static/img/10.png" width="160px" height="32px" />
+
+$\Delta$ represents the zero that was selected.  $\Theta$ represents other zeros.
+
+Step 7
+Set $\Delta$ to 1 and all the other elements of C4 to 0 and we can get another matrix:
+
+<img src="/Users/xintongli/rnorm/static/img/11.png" width="160px" height="32px" />
+
+If we match X* with the original matrix, we can get 
+ 
+<img src="/Users/xintongli/rnorm/static/img/12.png" width="250px" height="50px" />
+
+In R and Python Hungarian algorithm can be implemented using packages clue and munkres respectively.
+For example, in R
+R input:
+
+```{r}
+#install.packages("clue")
+library(clue)
+matrix1 <- matrix(c(5,6,8,4,5,
+                    3,4,6,6,1,
+                    5,5,7,9,8,
+                    6,7,5,7,6,
+                    7,4,6,2,8), nrow=5, byrow=TRUE)
+solve_LSAP(matrix1, maximum = FALSE)
+```
+
+So the final lowest-cost way to assign task 1 to worker 1, task 5 to worker 2, task 2 to worker 3, task 3 to worker 4, task 4 to worker 5. 
+
+
+
+

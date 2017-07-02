@@ -1,0 +1,51 @@
+---
+title: "Combinatorial Optimization Using Hungarian Algorithm"
+author: "Fei Zhou, Dunfu Yang"
+date: "June 6, 2017"
+output: html_document
+---
+
+
+
+<p>Hungarian linear assignment algorithm is a combinatorial optimization algorithm that solves the assignment problems so that an optimal assignment can be found. Harold Kuhn developed and published the method in 1955. The algorithm was largely based on the earlier works of two Hungarian mathematicians: Dénes Kőnig and Jenő Egerváry, therefore, the algorithm was named “Hungarian method”.</p>
+<p>In a simple example where we assign 5 tasks to 5 persons. The time cost for each person to finish each task is known. The problem is to find the lowest-cost way to assign the tasks. The problem can be represented in a matrix of the costs of time of the people doing the jobs. For example:</p>
+<p><img src="/Users/xintongli/rnorm/static/img/1.png" width="120px" height="24px" /></p>
+<p>And we need to assign each person with one task and each task must be accomplished by only one person. We can let:</p>
+<p><img src="/Users/xintongli/rnorm/static/img/2.png" width="350px" height="70px" /></p>
+<p>The problem becomes</p>
+<p><img src="/Users/xintongli/rnorm/static/img/3.png" width="130px" height="26px" /></p>
+<p>with</p>
+<p><img src="/Users/xintongli/rnorm/static/img/4.png" width="180px" height="36px" /></p>
+<p>In this case the model is:</p>
+<p><img src="/Users/xintongli/rnorm/static/img/5.png" width="800px" height="160px" /></p>
+<p>with constraints:</p>
+<p><img src="/Users/xintongli/rnorm/static/img/6.png" width="250px" height="50px" /></p>
+<p>Basically, we need to do transformations on the matrix so that in the end there is only one zero in each row and each column, with all elements nonnegative. Then we can match it to the original matrix so that we can get the lowest-cost way to assign tasks.</p>
+<p>Step 1 Reduce the rows by subtracting the minimum value of each row from that row and we can get matrix C1:</p>
+<p><img src="/Users/xintongli/rnorm/static/img/7.png" width="160px" height="32px" /></p>
+<p>Step 2 If there are columns without a zero, reduce the columns by subtracting the minimum value of each column from that column. We get a matrix same as C1:</p>
+<p><img src="/Users/xintongli/rnorm/static/img/7.png" width="160px" height="32px" /></p>
+<p>Step 3 Cover the zero elements with the minimum number of lines it is possible to cover them with. We let the number of lines denoted by m and the number of rows denoted by n.</p>
+<p><img src="/Users/xintongli/rnorm/static/img/8.png" width="250px" height="50px" /></p>
+<p>Step 4 If m &lt; n, we can divide the elements of C2 into 3 categories: 1) elements that are not covered by lines 2) elements that are covered by only one line 3) elements that are covered by two lines For elements in the first category, we can find the minimum value e and subtract e from all elements in the first category; elements in the second category stay the same and add e to the elements in the third category. Then we can get another matrix C3:</p>
+<p><img src="/Users/xintongli/rnorm/static/img/9.png" width="160px" height="32px" /></p>
+<p>Step 5 If we cover the zero elements of matrix C3 with the minimum number of lines. The lines will be on the first, fourth and fifth column, third and fourth row. This time we have m = n.</p>
+<p>Step 6 Start with a row or a column with only one zero and choose a set of zeros so that each row or column has only one zero selected.</p>
+<p><img src="/Users/xintongli/rnorm/static/img/10.png" width="160px" height="32px" /></p>
+<p><span class="math inline">\(\Delta\)</span> represents the zero that was selected. <span class="math inline">\(\Theta\)</span> represents other zeros.</p>
+<p>Step 7 Set <span class="math inline">\(\Delta\)</span> to 1 and all the other elements of C4 to 0 and we can get another matrix:</p>
+<p><img src="/Users/xintongli/rnorm/static/img/11.png" width="160px" height="32px" /></p>
+<p>If we match X* with the original matrix, we can get</p>
+<p><img src="/Users/xintongli/rnorm/static/img/12.png" width="250px" height="50px" /></p>
+<p>In R and Python Hungarian algorithm can be implemented using packages clue and munkres respectively. For example, in R R input:</p>
+<pre class="r"><code>#install.packages(&quot;clue&quot;)
+library(clue)
+matrix1 &lt;- matrix(c(5,6,8,4,5,
+                    3,4,6,6,1,
+                    5,5,7,9,8,
+                    6,7,5,7,6,
+                    7,4,6,2,8), nrow=5, byrow=TRUE)
+solve_LSAP(matrix1, maximum = FALSE)</code></pre>
+<pre><code>## Optimal assignment:
+## 1 =&gt; 1, 2 =&gt; 5, 3 =&gt; 2, 4 =&gt; 3, 5 =&gt; 4</code></pre>
+<p>So the final lowest-cost way to assign task 1 to worker 1, task 5 to worker 2, task 2 to worker 3, task 3 to worker 4, task 4 to worker 5.</p>
